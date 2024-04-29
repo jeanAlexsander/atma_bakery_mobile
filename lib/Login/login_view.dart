@@ -16,7 +16,7 @@ class LoginView extends StatefulWidget {
 
 class _LoginViewState extends State<LoginView> {
   bool _isPasswordVisible = true;
-  // bool _isLoading = false;
+  bool _isLoading = false;
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -93,6 +93,9 @@ class _LoginViewState extends State<LoginView> {
       }
     } catch (e) {
       _showErrorDialog("Login Failed", "$e");
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -182,9 +185,9 @@ class _LoginViewState extends State<LoginView> {
                 ),
                 ElevatedButton(
                   onPressed: () async {
-                    // setState(() {
-                    //   _isLoading = true;
-                    // });
+                    setState(() {
+                      _isLoading = true;
+                    });
                     await _login();
                   },
                   style: ButtonStyle(
@@ -203,14 +206,12 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                   ),
-                  child:
-                      // _isLoading
-                      //     ? const CircularProgressIndicator()
-                      //     :
-                      const Text(
-                    'Login',
-                    style: kButtonLoginStyle,
-                  ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator()
+                      : const Text(
+                          'Login',
+                          style: kButtonLoginStyle,
+                        ),
                 ),
                 const SizedBox(
                   height: 16,
