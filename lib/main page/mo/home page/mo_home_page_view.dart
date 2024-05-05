@@ -1,4 +1,5 @@
 import 'package:atma_bakery_mobile/main%20page/mo/component/mo_bottom_nav_bar.dart';
+import 'package:atma_bakery_mobile/main%20page/mo/presensi/presensi_view.dart';
 import 'package:flutter/material.dart';
 
 class MOHomepage extends StatefulWidget {
@@ -9,14 +10,27 @@ class MOHomepage extends StatefulWidget {
 }
 
 class _MOHomepageState extends State<MOHomepage> {
+  final pages = <Widget>[
+    const Text("Home"),
+    const PresensiView(),
+    const Text("Cart"),
+    const Text("Profile"),
+  ];
+  int index = 0;
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Scaffold(
         body: Center(
-          child: Text("MO Homepage"),
+          child: pages[index],
         ),
-        bottomNavigationBar: MOBottomNavBar(),
+        bottomNavigationBar: MOBottomNavBar(
+          onTapChangeIndex: (p0) {
+            setState(() {
+              index = p0;
+            });
+          },
+        ),
       ),
     );
   }
