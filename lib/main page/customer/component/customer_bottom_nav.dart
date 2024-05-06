@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CustomerBottomNavBar extends StatefulWidget {
-  const CustomerBottomNavBar({super.key});
+  const CustomerBottomNavBar({super.key, required this.onTapChangeIndex});
+
+  final Function(int) onTapChangeIndex;
 
   @override
   State<CustomerBottomNavBar> createState() => _CustomerBottomNavBarState();
@@ -20,13 +22,33 @@ class _CustomerBottomNavBarState extends State<CustomerBottomNavBar> {
       ),
       width: double.infinity,
       height: MediaQuery.of(context).size.height * 0.09,
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(Icons.home),
-          Icon(Icons.file_copy_sharp),
-          Icon(Icons.shopping_bag),
-          Icon(Icons.person),
+          IconButton(
+            onPressed: () => {
+              widget.onTapChangeIndex(0),
+            },
+            icon: const Icon(Icons.home),
+          ),
+          IconButton(
+            onPressed: () => {
+              widget.onTapChangeIndex(1),
+            },
+            icon: const Icon(Icons.file_copy_sharp),
+          ),
+          IconButton(
+            onPressed: () => {
+              widget.onTapChangeIndex(2),
+            },
+            icon: const Icon(Icons.shopping_bag),
+          ),
+          IconButton(
+            onPressed: () => {
+              widget.onTapChangeIndex(3),
+            },
+            icon: const Icon(Icons.person),
+          )
         ],
       ),
     );
