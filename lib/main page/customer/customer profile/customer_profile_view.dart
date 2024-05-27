@@ -1,4 +1,5 @@
 import 'package:atma_bakery_mobile/constraints.dart';
+import 'package:atma_bakery_mobile/main%20page/customer/customer%20profile/customer_profile_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -129,14 +130,16 @@ class _CustomerProfileViewState extends State<CustomerProfileView> {
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  CustomerController.sendEmail();
+                },
                 style: const ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(
                     Colors.blue,
                   ),
                 ),
                 child: const Text(
-                  'Delete',
+                  'Change',
                   style: kButtonLoginStyle,
                 ),
               ),

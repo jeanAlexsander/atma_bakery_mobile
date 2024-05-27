@@ -90,28 +90,29 @@ class _CustomerHistoryViewState extends State<CustomerHistoryView> {
                       History history = snapshot.data!.data[index];
                       return Card(
                         child: ListTile(
-                            leading: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.asset(
-                                "assets/images/Logo Kue.png",
+                          leading: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset(
+                              "assets/images/Logo Kue.png",
+                            ),
+                          ),
+                          title: Text(
+                            history.name,
+                          ),
+                          subtitle: Row(
+                            children: [
+                              Text(
+                                "Price: ${history.price}",
                               ),
-                            ),
-                            title: Text(
-                              history.name,
-                            ),
-                            subtitle: Row(
-                              children: [
-                                Text(
-                                  "Price: ${history.price}",
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  "Quantity: ${history.quantity}",
-                                ),
-                              ],
-                            )),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "Quantity: ${history.quantity}",
+                              ),
+                            ],
+                          ),
+                        ),
                       );
                     },
                   );

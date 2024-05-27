@@ -76,7 +76,7 @@ class _PresensiViewState extends State<PresensiView> {
                                       Future.value(updatedPresensiModel);
                                 });
                               }).catchError((error) {
-                                print('Error: $error');
+                                throw ('Error: $error');
                               });
                             },
                             child: const Text("Check"),
