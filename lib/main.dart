@@ -1,4 +1,4 @@
-import 'package:atma_bakery_mobile/home%20general/general_home/general_home_product.dart';
+import 'package:atma_bakery_mobile/Login/login_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -34,6 +34,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return const GeneralHomePage();
+    return const LoginView();
   }
 }

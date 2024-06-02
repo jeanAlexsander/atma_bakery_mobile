@@ -1,4 +1,5 @@
 import 'package:atma_bakery_mobile/main%20page/mo/component/mo_bottom_nav_bar.dart';
+import 'package:atma_bakery_mobile/main%20page/mo/laporan/laporan_main_view.dart';
 import 'package:atma_bakery_mobile/main%20page/mo/presensi/presensi_view.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +12,7 @@ class MOHomepage extends StatefulWidget {
 
 class _MOHomepageState extends State<MOHomepage> {
   final pages = <Widget>[
-    const Text("Home"),
+    const LaporanMainView(),
     const PresensiView(),
     const Text("Cart"),
     const Text("Profile"),
