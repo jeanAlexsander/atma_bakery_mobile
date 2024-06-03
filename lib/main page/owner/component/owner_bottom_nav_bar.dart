@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class OwnerBottomNavBar extends StatefulWidget {
-  const OwnerBottomNavBar({super.key});
+  const OwnerBottomNavBar({super.key, required this.onTabSeleted});
+
+  final Function(int) onTabSeleted;
 
   @override
   State<OwnerBottomNavBar> createState() => _OwnerBottomNavBarState();
@@ -20,13 +22,33 @@ class _OwnerBottomNavBarState extends State<OwnerBottomNavBar> {
       ),
       width: double.infinity,
       height: MediaQuery.of(context).size.height * 0.09,
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(Icons.home),
-          Icon(Icons.file_copy_sharp),
-          Icon(Icons.shopping_bag),
-          Icon(Icons.person),
+          IconButton(
+            onPressed: () => {
+              widget.onTabSeleted(0),
+            },
+            icon: const Icon(Icons.home),
+          ),
+          IconButton(
+            onPressed: () => {
+              widget.onTabSeleted(1),
+            },
+            icon: const Icon(Icons.file_copy_sharp),
+          ),
+          IconButton(
+            onPressed: () => {
+              widget.onTabSeleted(2),
+            },
+            icon: const Icon(Icons.shopping_bag),
+          ),
+          IconButton(
+            onPressed: () => {
+              widget.onTabSeleted(3),
+            },
+            icon: const Icon(Icons.person),
+          )
         ],
       ),
     );

@@ -1,3 +1,5 @@
+import 'package:atma_bakery_mobile/main%20page/mo/laporan/laporan_main_view.dart';
+import 'package:atma_bakery_mobile/main%20page/owner/component/owner_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class OwnerHomePage extends StatefulWidget {
@@ -8,14 +10,35 @@ class OwnerHomePage extends StatefulWidget {
 }
 
 class _OwnerHomePageState extends State<OwnerHomePage> {
+  int index = 0;
+
+  final _pages = <Widget>[
+    const Center(
+      child: Text("Home"),
+    ),
+    const Center(
+      child: Text("Order"),
+    ),
+    const LaporanMainView(),
+    const Center(
+      child: Text("Profile"),
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Scaffold(
         body: Center(
-          child: Text("Owner Homepage"),
+          child: _pages[index],
         ),
-        bottomNavigationBar: OwnerHomePage(),
+        bottomNavigationBar: OwnerBottomNavBar(
+          onTabSeleted: (p0) {
+            setState(() {
+              index = p0;
+            });
+          },
+        ),
       ),
     );
   }
