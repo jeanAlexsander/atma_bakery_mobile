@@ -17,8 +17,8 @@ class UserLoginModel {
   String toRawJson() => json.encode(toJson());
 
   factory UserLoginModel.fromJson(Map<String, dynamic> json) => UserLoginModel(
-        status: json["status"],
-        message: json["message"],
+        status: json["status"] ?? "",
+        message: json["message"] ?? "",
         data: List<User>.from(json["data"].map((x) => User.fromJson(x))),
       );
 
@@ -57,15 +57,17 @@ class User {
   String toRawJson() => json.encode(toJson());
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        userId: json["user_id"],
-        firstName: json["first_name"],
-        lastName: json["last_name"],
-        email: json["email"],
-        passwordHash: json["password_hash"],
-        dateOfBirth: DateTime.parse(json["date_of_birth"]),
-        totalPoint: json["total_point"],
-        roleId: json["role_id"],
-        roleName: json["role_name"],
+        userId: json["user_id"] ?? 0,
+        firstName: json["first_name"] ?? "",
+        lastName: json["last_name"] ?? "",
+        email: json["email"] ?? "",
+        passwordHash: json["password_hash"] ?? "",
+        dateOfBirth: json["date_of_birth"] != null
+            ? DateTime.parse(json["date_of_birth"])
+            : DateTime.now(),
+        totalPoint: json["total_point"] ?? 0,
+        roleId: json["role_id"] ?? 0,
+        roleName: json["role_name"] ?? "",
       );
 
   Map<String, dynamic> toJson() => {
@@ -74,8 +76,7 @@ class User {
         "last_name": lastName,
         "email": email,
         "password_hash": passwordHash,
-        "date_of_birth":
-            "${dateOfBirth.year.toString().padLeft(4, '0')}-${dateOfBirth.month.toString().padLeft(2, '0')}-${dateOfBirth.day.toString().padLeft(2, '0')}",
+        "date_of_birth": dateOfBirth.toIso8601String(),
         "total_point": totalPoint,
         "role_id": roleId,
         "role_name": roleName,

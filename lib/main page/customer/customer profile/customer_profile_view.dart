@@ -1,5 +1,7 @@
 import 'package:atma_bakery_mobile/constraints.dart';
 import 'package:atma_bakery_mobile/main%20page/customer/customer%20profile/customer_profile_controller.dart';
+import 'package:atma_bakery_mobile/main%20page/customer/customer%20profile/customer_saldo_model.dart';
+import 'package:atma_bakery_mobile/main%20page/customer/customer%20profile/tarik%20saldo%20history/tarik_saldo_view.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +17,7 @@ class _CustomerProfileViewState extends State<CustomerProfileView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late Future<SharedPreferences> _prefs;
+  late Future<CustomerSaldoModel> _customerSaldoModel;
 
   bool _isPasswordVisible = true;
 
@@ -22,6 +25,7 @@ class _CustomerProfileViewState extends State<CustomerProfileView> {
   void initState() {
     super.initState();
     _prefs = SharedPreferences.getInstance();
+    _customerSaldoModel = CustomerController.fetchSaldo();
     _loadUserData();
   }
 
@@ -42,111 +46,156 @@ class _CustomerProfileViewState extends State<CustomerProfileView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 20),
-          child: Text(
-            'My Profile',
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Text(
+              'My Profile',
+            ),
           ),
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.0),
-          child: Icon(
-            Icons.camera_front_rounded,
-            size: 200,
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0),
+            child: Icon(
+              Icons.camera_front_rounded,
+              size: 200,
+            ),
           ),
-        ),
-        FutureBuilder<SharedPreferences>(
-          future: _prefs,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasError) {
-              return const Text('Error');
-            } else {
-              return Container(
-                height: 400,
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextFormField(
-                      controller: _nameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Name',
-                        hintText: "Enter your Name",
-                      ),
-                      enabled: false,
-                    ),
-                    TextFormField(
-                      controller: _emailController,
-                      decoration: const InputDecoration(
-                        labelText: 'Email',
-                        hintText: "Enter your email",
-                      ),
-                      enabled: false,
-                    ),
-                    TextFormField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        hintText: "Enter your Password",
-                        suffixIcon: IconButton(
-                          icon: Icon(_isPasswordVisible
-                              ? Icons.visibility_off
-                              : Icons.visibility),
-                          onPressed: () {
-                            setState(() {
-                              _isPasswordVisible = !_isPasswordVisible;
-                            });
-                          },
+          FutureBuilder(
+            future: _customerSaldoModel,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else if (snapshot.hasError) {
+                return const Center(
+                  child: Text('Error'),
+                );
+              } else {
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text('Saldo: ${snapshot.data!.data.saldo}'),
+                      ElevatedButton(
+                        onPressed: () {},
+                        style: const ButtonStyle(
+                          backgroundColor: MaterialStatePropertyAll<Color>(
+                            Colors.blue,
+                          ),
                         ),
-                      ),
-                      obscureText: _isPasswordVisible,
-                      enabled: false,
-                    ),
-                  ],
-                ),
-              );
-            }
-          },
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(
-                    Colors.blue,
+                        child: const Text(
+                          'Tarik',
+                          style: kButtonLoginStyle,
+                        ),
+                      )
+                    ],
                   ),
-                ),
-                child: const Text(
-                  'Update',
-                  style: kButtonLoginStyle,
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  CustomerController.sendEmail();
-                },
-                style: const ButtonStyle(
-                  backgroundColor: MaterialStatePropertyAll<Color>(
-                    Colors.blue,
-                  ),
-                ),
-                child: const Text(
-                  'Change',
-                  style: kButtonLoginStyle,
-                ),
-              ),
-            ],
+                );
+              }
+            },
           ),
-        )
-      ],
+          FutureBuilder<SharedPreferences>(
+            future: _prefs,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const CircularProgressIndicator();
+              } else if (snapshot.hasError) {
+                return const Text('Error');
+              } else {
+                return Container(
+                  height: 400,
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextFormField(
+                        controller: _nameController,
+                        decoration: const InputDecoration(
+                          labelText: 'Name',
+                          hintText: "Enter your Name",
+                        ),
+                        enabled: false,
+                      ),
+                      TextFormField(
+                        controller: _emailController,
+                        decoration: const InputDecoration(
+                          labelText: 'Email',
+                          hintText: "Enter your email",
+                        ),
+                        enabled: false,
+                      ),
+                      TextFormField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          hintText: "Enter your Password",
+                          suffixIcon: IconButton(
+                            icon: Icon(_isPasswordVisible
+                                ? Icons.visibility_off
+                                : Icons.visibility),
+                            onPressed: () {
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              });
+                            },
+                          ),
+                        ),
+                        obscureText: _isPasswordVisible,
+                        enabled: false,
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TarikSaldoView(),
+                      ),
+                    );
+                  },
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll<Color>(
+                      Colors.blue,
+                    ),
+                  ),
+                  child: const Text(
+                    'History',
+                    style: kButtonLoginStyle,
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    CustomerController.sendEmail();
+                  },
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll<Color>(
+                      Colors.blue,
+                    ),
+                  ),
+                  child: const Text(
+                    'Change',
+                    style: kButtonLoginStyle,
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

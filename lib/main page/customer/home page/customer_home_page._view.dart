@@ -1,6 +1,7 @@
 import 'package:atma_bakery_mobile/main%20page/customer/component/customer_bottom_nav.dart';
 import 'package:atma_bakery_mobile/main%20page/customer/customer%20profile/customer_profile_view.dart';
 import 'package:atma_bakery_mobile/main%20page/customer/history/customer_history_view.dart';
+import 'package:atma_bakery_mobile/main%20page/customer/pesanan%20dikirim/pesanan_dikirim_view.dart';
 import 'package:flutter/material.dart';
 
 class CustomerHomepage extends StatefulWidget {
@@ -21,7 +22,7 @@ class _CustomerHomepagegState extends State<CustomerHomepage> {
       child: CustomerHistoryView(),
     ),
     const Center(
-      child: Text('Cart'),
+      child: PesananDikirimView(),
     ),
     const Center(
       child: CustomerProfileView(),
